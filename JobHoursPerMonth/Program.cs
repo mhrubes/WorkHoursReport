@@ -63,11 +63,8 @@ namespace JobHoursPerMonth
 
                 try
                 {
-                    string initials = "", createPdfFile;
+                    string createPdfFile;
                     bool createPdf = false;
-
-                    Console.Write("\nZadejte svoje Příjmení a Jméno: ");
-                    initials = Console.ReadLine();
 
                     do
                     {
@@ -79,6 +76,10 @@ namespace JobHoursPerMonth
 
                     if (createPdf)
                     {
+                        string initials = "";
+                        Console.Write("\nZadejte svůj podpis, který bude na konci stránky: ");
+                        initials = Console.ReadLine();
+
                         Console.WriteLine();
                         PDFController document = new PDFController();
                         document.CreatePdfDocument(monthlyData, totalHoursForActualMonth, totalHoursForYear, initials);
