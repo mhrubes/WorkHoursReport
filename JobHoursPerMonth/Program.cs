@@ -68,13 +68,29 @@ namespace JobHoursPerMonth
 
                 try
                 {
-                    string initials = "";
+                    string initials = "", createPdfFile;
+                    bool createPdf = false;
+
                     Console.Write("\nZadejte svoje Příjmení a Jméno: ");
                     initials = Console.ReadLine();
 
-                    Console.WriteLine();
-                    PDFController document = new PDFController();
-                    document.CreatePdfDocument(monthlyData, totalHoursForActualMonth, totalHoursForYear, initials);
+                    do
+                    {
+                        Console.Write("\nChcete vytvořit PDF soubor? (Y / N): ");
+                        createPdfFile = Console.ReadLine();
+                    } while (createPdfFile != "Y" && createPdfFile != "N");
+
+                    createPdf = createPdfFile.ToUpper() == "Y" && createPdfFile != "" ? true : false;
+
+                    if (createPdf)
+                    {
+                        Console.WriteLine();
+                        PDFController document = new PDFController();
+                        document.CreatePdfDocument(monthlyData, totalHoursForActualMonth, totalHoursForYear, initials);
+                        Console.WriteLine("\nNyní můžete aplikaci zavřít.");
+                    }
+                    else
+                        Console.WriteLine("\nNyní můžete aplikaci zavřít.");
                 }
                 catch (Exception err)
                 {
