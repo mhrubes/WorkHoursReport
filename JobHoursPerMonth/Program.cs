@@ -31,15 +31,10 @@ namespace JobHoursPerMonth
                         string month = pair.Key;
                         List<string> data = pair.Value;
 
-
                         double totalHours = 0;
                         foreach (string item in data)
-                        {
                             if (double.TryParse(item.Split(' ')[0], out double parsedHours))
-                            {
                                 totalHours += parsedHours;
-                            }
-                        }
 
                         totalHoursForYear += totalHours;
 
@@ -63,7 +58,7 @@ namespace JobHoursPerMonth
                 }
 
                 // --------------------------------------------------------------------------------
-                // --------------------------------------------------------------------------------
+                // PDF Section
                 // --------------------------------------------------------------------------------
 
                 try
