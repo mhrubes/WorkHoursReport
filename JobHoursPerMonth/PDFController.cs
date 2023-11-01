@@ -9,7 +9,7 @@ namespace JobHoursPerMonth
 {
     public class PDFController
     {
-        public Document CreatePdfDocument(Dictionary<string, List<string>> monthlyData, double totalHoursForActualMonth, double totalHoursForYear)
+        public Document CreatePdfDocument(Dictionary<string, List<string>> monthlyData, double totalHoursForActualMonth, double totalHoursForYear, string initials)
         {
             Document document = new Document();
             document.Info.Title = "Pracovní výkaz";
@@ -80,9 +80,10 @@ namespace JobHoursPerMonth
 
             // Paragraf na Konci Stránky
             Paragraph endParagraph = section.AddParagraph();
-            endParagraph.AddDateField();
-            endParagraph.AddFormattedText($"\n{GlobalVariables.signatureInitials}");
             endParagraph.Format.Alignment = ParagraphAlignment.Right; // Zarovnání napravo
+            endParagraph.AddDateField();
+            if (initials != "")
+                endParagraph.AddFormattedText($"\n{initials}");
 
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
