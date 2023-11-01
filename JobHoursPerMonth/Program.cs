@@ -45,58 +45,73 @@ namespace JobHoursPerMonth
 
             if (monthlyData != null)
             {
-                var table = new BetterConsoleTables.Table("Měsíc", "Celkový počet hodin za měsíc");
-
-                DateTime currentDate = GlobalVariables.date;
-                string currentMonthName = currentDate.ToString("MMMM", new System.Globalization.CultureInfo("cs-CZ"));
-
                 double totalHoursForActualMonth = 0;
                 double totalHoursForYear = 0;
-                foreach (var pair in monthlyData)
+
+                try
                 {
-                    string month = pair.Key;
-                    List<string> data = pair.Value;
+                    var table = new BetterConsoleTables.Table("Měsíc", "Celkový počet hodin za měsíc");
 
+                    DateTime currentDate = GlobalVariables.date;
+                    string currentMonthName = currentDate.ToString("MMMM", new System.Globalization.CultureInfo("cs-CZ"));
 
-                    double totalHours = 0;
-                    foreach (string item in data)
+                    foreach (var pair in monthlyData)
                     {
-                        if (double.TryParse(item.Split(' ')[0], out double parsedHours))
+                        string month = pair.Key;
+                        List<string> data = pair.Value;
+
+
+                        double totalHours = 0;
+                        foreach (string item in data)
                         {
-                            totalHours += parsedHours;
+                            if (double.TryParse(item.Split(' ')[0], out double parsedHours))
+                            {
+                                totalHours += parsedHours;
+                            }
                         }
+
+                        totalHoursForYear += totalHours;
+
+                        if (month.ToLower() == currentMonthName)
+                            totalHoursForActualMonth += totalHours;
+
+                        table.AddRow(month, totalHours);
                     }
 
-                    totalHoursForYear += totalHours;
+                    table.Config = TableConfiguration.Unicode();
 
-                    if (month.ToLower() == currentMonthName)
-                        totalHoursForActualMonth += totalHours;
-
-                    table.AddRow(month, totalHours);
+                    Console.WriteLine("Záznamy za rok: " + GlobalVariables.date.Year);
+                    string tableText = table.ToString();
+                    Console.WriteLine(tableText);
+                    Console.WriteLine($"Celkový počet hodin za tento měsíc: {totalHoursForActualMonth}.");
+                    Console.WriteLine($"Celkový počet hodin za celý rok: {totalHoursForYear}.");
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(err.ToString());
                 }
 
-                table.Config = TableConfiguration.Unicode();
-
-                Console.WriteLine("Záznamy za rok: " + GlobalVariables.date.Year);
-                string tableText = table.ToString();
-                Console.WriteLine(tableText);
-                Console.WriteLine($"Celkový počet hodin za tento měsíc: {totalHoursForActualMonth}.");
-                Console.WriteLine($"Celkový počet hodin za celý rok: {totalHoursForYear}.");
-
                 // --------------------------------------------------------------------------------
                 // --------------------------------------------------------------------------------
                 // --------------------------------------------------------------------------------
 
-                string initials = "";
-                Console.Write("\nZadejte svoje Příjmení a Jméno: ");
-                initials = Console.ReadLine();
+                try
+                {
+                    string initials = "";
+                    Console.Write("\nZadejte svoje Příjmení a Jméno: ");
+                    initials = Console.ReadLine();
 
-                Console.WriteLine();
-                PDFController document = new PDFController();
-                document.CreatePdfDocument(monthlyData, totalHoursForActualMonth, totalHoursForYear, initials);
+                    Console.WriteLine();
+                    PDFController document = new PDFController();
+                    document.CreatePdfDocument(monthlyData, totalHoursForActualMonth, totalHoursForYear, initials);
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(err.ToString());
+                }
             }
             else
-                Console.WriteLine("Něco se pokazilo");
+                Console.WriteLine("Proces byl přerušeno.");
 
             Console.ReadKey();
         }

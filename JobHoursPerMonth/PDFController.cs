@@ -65,7 +65,7 @@ namespace JobHoursPerMonth
             // Přidání textu s celkovým počtem hodin za aktuální měsíc
             Paragraph totalHoursPerMonthText = section.AddParagraph();
             totalHoursPerMonthText.AddFormattedText("Celkový počet hodin za aktuální měsíc: ", TextFormat.Bold);
-            totalHoursPerMonthText.AddText($"{totalHoursForActualMonth} hodin.");
+            totalHoursPerMonthText.AddText($"{totalHoursForActualMonth} {(totalHoursForActualMonth > 1 ? "hodiny" : "hodina")}.");
             totalHoursPerMonthText.Format.Alignment = ParagraphAlignment.Right; // Zarovnání napravo
 
             // Přidání textu s celkovým počtem hodin za rok
