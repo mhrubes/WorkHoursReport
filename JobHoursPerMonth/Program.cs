@@ -15,34 +15,6 @@ namespace JobHoursPerMonth
             WorkData workData = new WorkData();
             monthlyData = workData.GetData();
 
-            //monthlyData["Leden"] = new List<string> { };
-            //monthlyData["Únor"] = new List<string> { };
-            //monthlyData["Březen"] = new List<string> { };
-            //monthlyData["Duben"] = new List<string> { };
-            //monthlyData["Květen"] = new List<string> { };
-            //monthlyData["Červen"] = new List<string> { };
-            //monthlyData["Červenen"] = new List<string> { };
-            //monthlyData["Srpen"] = new List<string> { };
-            //monthlyData["Září"] = new List<string> { };
-
-            //monthlyData["Říjen"] = new List<string>
-            //{
-            //    "2,5 hodin",
-            //    "2 hodiny",
-            //    "1 hodina",
-            //    "3 hodiny",
-            //    "4,5 hodiny",
-            //    "3 hodiny",
-            //    "2 hodiny",
-            //    "3 hodiny",
-            //    "1 hodina",
-            //    "4 hodiny",
-            //    "1,5 hodina"
-            //};
-
-            //monthlyData["Listopad"] = new List<string> { };
-            //monthlyData["Prosinec"] = new List<string> { };
-
             if (monthlyData != null)
             {
                 double totalHoursForActualMonth = 0;
